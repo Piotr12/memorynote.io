@@ -9,13 +9,18 @@ cd "$(dirname "$0")/.."
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
 serve() { # <env>: prints the served page on stdout
-  local env=$1
+  local env=$1 port body
   docker build --quiet --build-arg ENVIRONMENT="$env" -t "memorynote-test-$env" .
   docker rm -f "memorynote-test-$env" 2>/dev/null || true
   docker run -d --name "memorynote-test-$env" -p 127.0.0.1:0:80 "memorynote-test-$env" >/dev/null
-  local port
   port=$(docker port "memorynote-test-$env" | awk -F: '{print $NF; exit}')
-  curl -fsS "http://127.0.0.1:$port/"
+  # nginx needs a moment after the container starts.
+  for _ in $(seq 1 20); do
+    body=$(curl -fsS "http://127.0.0.1:$port/" 2>/dev/null) && break
+    sleep 0.5
+  done
+  [ -n "${body:-}" ] || fail "$env: the page did not come up on 127.0.0.1:$port"
+  printf '%s\n' "$body"
 }
 
 check_page() { # <env>
