@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>memorynote.io — design system (v1, light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FCFCFB;
+  --surface:#FFFFFF;
+  --surface-2:#F5F5F4;
+  --text:#1C1917;
+  --text-2:#57534E;
+  --border:#E7E5E4;
+  --border-2:#D6D3D1;
+  --orange:#F97316;
+  --accent:#C2410C;
+  --accent-hover:#9A3412;
+  --on-accent:#FFFFFF;
+  --accent-soft:#FFF7ED;
+  --focus:#EA580C;
+  --font:"Inter",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 var(--font)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1024px){.wrap{padding:0 48px}}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--border)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:56px}
+.word{font-weight:600;font-size:16px;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.mark{width:10px;height:10px;border-radius:3px;background:var(--orange)}
+.toggle{font:500 14px/1 var(--font);color:var(--text);background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:8px 14px}
+.toggle:hover{border-color:var(--text-2)}
+.toggle:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* page head */
+.head{padding:56px 0 8px}
+.head h1{font-size:40px;line-height:1.15;font-weight:700;letter-spacing:-0.02em}
+.lede{margin-top:12px;color:var(--text-2);max-width:56ch}
+
+/* sections */
+section{padding-top:56px}
+section h2{font-size:20px;font-weight:600;letter-spacing:-0.01em;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.note{color:var(--text-2);font-size:14px;margin-top:16px}
+
+/* color */
+.swatches{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.swatches{grid-template-columns:repeat(4,1fr)}}
+.sw{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)}
+.sw .chip{height:56px}
+.sw .meta{padding:10px 12px}
+.sw .name{font:500 13px/1.4 var(--mono)}
+.sw .hex{font:400 12px/1.4 var(--mono);color:var(--text-2)}
+.sw .use{font-size:12px;line-height:1.4;color:var(--text-2);margin-top:4px}
+table.tokens{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.tokens th{text-align:left;font-weight:500;color:var(--text-2);font-size:12px;padding:6px 10px;border-bottom:1px solid var(--border-2)}
+.tokens td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tokens td:first-child{font:500 12px/1.4 var(--mono)}
+.tokens td:nth-child(2),.tokens td:nth-child(3){font:400 12px/1.4 var(--mono);white-space:nowrap}
+.tokens .dot{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;border:1px solid rgba(0,0,0,.12);vertical-align:-1px}
+
+/* type */
+.specimen{font-size:48px;line-height:1.1;font-weight:700;letter-spacing:-0.03em}
+.scale{margin-top:24px;border-top:1px solid var(--border)}
+.scale .row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border)}
+.scale .meta{font:400 12px/1.5 var(--mono);color:var(--text-2)}
+.t-display{font-size:32px;font-weight:700;letter-spacing:-0.02em}
+.t-h{font-size:24px;font-weight:600;letter-spacing:-0.01em}
+.t-body{font-size:16px}
+.t-small{font-size:14px}
+.t-caption{font-size:13px;font-weight:500;color:var(--text-2)}
+.mono-sample{font:400 14px/1.6 var(--mono);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:16px}
+
+/* spacing */
+.space-row{display:flex;align-items:center;gap:12px;padding:6px 0}
+.space-bar{height:10px;background:var(--accent-soft);border:1px solid var(--orange);border-radius:4px}
+.space-row .meta{font:400 12px/1.4 var(--mono);color:var(--text-2);min-width:40px}
+
+/* radius */
+.radius-row{display:flex;gap:24px;flex-wrap:wrap}
+.radius-item{width:120px}
+.radius-box{height:80px;background:var(--surface);border:1.5px solid var(--text-2)}
+.radius-item .meta{font:400 12px/1.5 var(--mono);color:var(--text-2);margin-top:8px}
+
+/* breakpoints */
+.bp{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.bp{grid-template-columns:repeat(4,1fr)}}
+.bp .item{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:12px}
+.bp .px{font:500 15px/1.3 var(--mono);color:var(--accent)}
+.bp .use{font-size:12px;color:var(--text-2);margin-top:4px}
+
+/* components */
+.demo{display:grid;gap:20px}
+@media(min-width:768px){.demo{grid-template-columns:1fr 1fr}}
+.demo h3{font-size:14px;font-weight:600;margin-bottom:12px}
+.btn{display:inline-block;font:500 14px/1 var(--font);border-radius:8px;padding:10px 16px;border:1px solid transparent;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:var(--surface);color:var(--text);border-color:var(--border-2)}
+.btn-secondary:hover{border-color:var(--text-2)}
+.btn[disabled]{color:var(--text-2);background:var(--surface-2);border-color:var(--border);cursor:default}
+.demo .gap{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px}
+.card h4{font-size:16px;font-weight:600}
+.card .sub{font:400 12px/1.5 var(--mono);color:var(--text-2);margin:2px 0 10px}
+.card p{font-size:14px;color:var(--text-2)}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.card .foot .date{font-size:12px;color:var(--text-2)}
+.link{color:var(--accent);text-decoration:underline;text-underline-offset:2px;font-size:13px}
+.field label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+.field input{width:100%;max-width:320px;font:400 14px/1 var(--font);color:var(--text);background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:10px 12px}
+.field input::placeholder{color:var(--text-2)}
+.field input:focus-visible{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+.field .hint{font-size:12px;color:var(--text-2);margin-top:6px}
+
+/* footer */
+footer{margin-top:72px;border-top:1px solid var(--border);padding:24px 0 48px;color:var(--text-2)}
+footer .line1{font-size:13px}
+footer .line2{font:400 12px/1.6 var(--mono);margin-top:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <span class="word"><span class="mark"></span>memorynote.io</span>
+    <button class="toggle" type="button">Switch to dark</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <h1>Design system</h1>
+    <p class="lede">Color, type, spacing, radius, and the four core components. Every page on memorynote.io uses these tokens.</p>
+  </div>
+
+  <section>
+    <h2>Color</h2>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#FCFCFB"></div><div class="meta"><div class="name">--bg</div><div class="hex">#FCFCFB</div><div class="use">page background</div></div></div>
+      <div class="sw"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><div class="name">--surface</div><div class="hex">#FFFFFF</div><div class="use">cards, inputs</div></div></div>
+      <div class="sw"><div class="chip" style="background:#F5F5F4"></div><div class="meta"><div class="name">--surface-2</div><div class="hex">#F5F5F4</div><div class="use">nested surfaces, hover</div></div></div>
+      <div class="sw"><div class="chip" style="background:#F97316"></div><div class="meta"><div class="name">--orange</div><div class="hex">#F97316</div><div class="use">leading color, brand</div></div></div>
+      <div class="sw"><div class="chip" style="background:#C2410C"></div><div class="meta"><div class="name">--accent</div><div class="hex">#C2410C</div><div class="use">links, primary button</div></div></div>
+      <div class="sw"><div class="chip" style="background:#1C1917"></div><div class="meta"><div class="name">--text</div><div class="hex">#1C1917</div><div class="use">primary text</div></div></div>
+      <div class="sw"><div class="chip" style="background:#57534E"></div><div class="meta"><div class="name">--text-2</div><div class="hex">#57534E</div><div class="use">secondary text</div></div></div>
+      <div class="sw"><div class="chip" style="background:#E7E5E4"></div><div class="meta"><div class="name">--border</div><div class="hex">#E7E5E4</div><div class="use">hairlines, inputs</div></div></div>
+    </div>
+    <table class="tokens">
+      <tr><th>token</th><th>light</th><th>dark</th><th>use</th></tr>
+      <tr><td>--orange</td><td><span class="dot" style="background:#F97316"></span>#F97316</td><td><span class="dot" style="background:#F97316"></span>#F97316</td><td>leading color, brand mark</td></tr>
+      <tr><td>--accent</td><td><span class="dot" style="background:#C2410C"></span>#C2410C</td><td><span class="dot" style="background:#FB923C"></span>#FB923C</td><td>links, primary button fill</td></tr>
+      <tr><td>--accent-soft</td><td><span class="dot" style="background:#FFF7ED"></span>#FFF7ED</td><td><span class="dot" style="background:#431407"></span>#431407</td><td>accent chips, selected rows</td></tr>
+      <tr><td>--bg</td><td><span class="dot" style="background:#FCFCFB"></span>#FCFCFB</td><td><span class="dot" style="background:#0C0A09"></span>#0C0A09</td><td>page background</td></tr>
+      <tr><td>--surface</td><td><span class="dot" style="background:#FFFFFF"></span>#FFFFFF</td><td><span class="dot" style="background:#1C1917"></span>#1C1917</td><td>cards, inputs</td></tr>
+      <tr><td>--text</td><td><span class="dot" style="background:#1C1917"></span>#1C1917</td><td><span class="dot" style="background:#FAFAF9"></span>#FAFAF9</td><td>primary text</td></tr>
+    </table>
+    <p class="note">The accent ramps darker in light mode and lighter in dark mode so that links and button text stay at WCAG 2.2 AA in both.</p>
+  </section>
+
+  <section>
+    <h2>Typography</h2>
+    <div class="specimen">Inter</div>
+    <div class="scale">
+      <div class="row"><div class="meta">40 / 700 / 1.15<br>display</div><div class="t-display">Memory is a note you keep for later.</div></div>
+      <div class="row"><div class="meta">24 / 600 / 1.3<br>heading</div><div class="t-h">Spring plan, first draft</div></div>
+      <div class="row"><div class="meta">16 / 400 / 1.6<br>body</div><div class="t-body">Write it down before it walks away. Notes stay where you leave them.</div></div>
+      <div class="row"><div class="meta">14 / 400 / 1.6<br>small</div><div class="t-small">Faster than Tuesday. The route along the river held up.</div></div>
+      <div class="row"><div class="meta">13 / 500 / 1.4<br>caption</div><div class="t-caption">edited 12 min ago</div></div>
+    </div>
+    <div class="mono-sample">--accent: #C2410C;&nbsp;&nbsp;/* token values always render in mono */</div>
+  </section>
+
+  <section>
+    <h2>Spacing</h2>
+    <div class="space-row"><div class="meta">4</div><div class="space-bar" style="width:4px"></div></div>
+    <div class="space-row"><div class="meta">8</div><div class="space-bar" style="width:8px"></div></div>
+    <div class="space-row"><div class="meta">12</div><div class="space-bar" style="width:12px"></div></div>
+    <div class="space-row"><div class="meta">16</div><div class="space-bar" style="width:16px"></div></div>
+    <div class="space-row"><div class="meta">24</div><div class="space-bar" style="width:24px"></div></div>
+    <div class="space-row"><div class="meta">32</div><div class="space-bar" style="width:32px"></div></div>
+    <div class="space-row"><div class="meta">48</div><div class="space-bar" style="width:48px"></div></div>
+    <div class="space-row"><div class="meta">64</div><div class="space-bar" style="width:64px"></div></div>
+    <p class="note">Base unit 4 px. Space above a heading is larger than the space below it.</p>
+  </section>
+
+  <section>
+    <h2>Corner radius</h2>
+    <div class="radius-row">
+      <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="meta">8 px — controls<br>buttons, inputs</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="meta">12 px — cards<br>cards, panels</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Breakpoints</h2>
+    <div class="bp">
+      <div class="item"><div class="px">640</div><div class="use">small phones up</div></div>
+      <div class="item"><div class="px">768</div><div class="use">tablets up</div></div>
+      <div class="item"><div class="px">1024</div><div class="use">laptops up</div></div>
+      <div class="item"><div class="px">1280</div><div class="use">desktop up</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Components</h2>
+    <div class="demo">
+      <div>
+        <h3>Button</h3>
+        <div class="gap">
+          <button class="btn btn-primary" type="button">Save note</button>
+          <button class="btn btn-secondary" type="button">Preview</button>
+          <button class="btn btn-secondary" type="button" disabled>Delete</button>
+        </div>
+        <p class="note" style="margin-top:12px">Primary uses the mode accent. Focus draws a 2 px ring at 2 px offset.</p>
+      </div>
+      <div>
+        <h3>Card</h3>
+        <div class="card">
+          <h4>Morning run</h4>
+          <div class="sub">5.2 km · 28:14</div>
+          <p>Faster than Tuesday. The route along the river held up.</p>
+          <div class="foot"><a class="link" href="#">Edit note</a><span class="date">Oct 25</span></div>
+        </div>
+      </div>
+      <div>
+        <h3>Input</h3>
+        <div class="field">
+          <label for="t">Note title</label>
+          <input id="t" type="text" placeholder="e.g. Ideas for the spring plan">
+          <div class="hint">Visible on every page you share.</div>
+        </div>
+      </div>
+      <div>
+        <h3>Text</h3>
+        <p class="t-body">Notes link to each other. <a class="link" href="#">Open the linked note</a> to keep the trail.</p>
+        <p class="t-caption" style="margin-top:8px">last opened on the desk machine</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="line1">built on dgxspark in Jozefoslaw.</div>
+    <div class="line2">branch: main · commit: 8f3a2c1</div>
+  </footer>
+</div>
+</body>
+</html>
