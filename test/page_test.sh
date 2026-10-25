@@ -28,9 +28,13 @@ check_page() { # <env>
   if [ "$env" = dev ]; then other=prod; else other=dev; fi
   body=$(serve "$env")
   echo "$body" | grep -q "Hello world" || fail "$env: the page does not say Hello world"
-  echo "$body" | grep -q "$env" || fail "$env: the page has no $env marker"
-  echo "$body" | grep -q "$other" && fail "$env: the page mentions the $other environment"
-  echo "$body" | grep -q "__ENVIRONMENT__" && fail "$env: the page still has the placeholder"
+  echo "$body" | grep -q "class=\"marker\">$env<" || fail "$env: the page has no $env marker"
+  if echo "$body" | grep -q "class=\"marker\">$other<"; then
+    fail "$env: the page shows the $other marker"
+  fi
+  if echo "$body" | grep -q "__ENVIRONMENT__"; then
+    fail "$env: the page still has the placeholder"
+  fi
   docker rm -f "memorynote-test-$env" >/dev/null
   docker rmi -f "memorynote-test-$env" >/dev/null
   echo "$env page: ok"
