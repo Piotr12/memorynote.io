@@ -8,4 +8,5 @@ ARG ENVIRONMENT
 RUN test "$ENVIRONMENT" = "dev" -o "$ENVIRONMENT" = "prod"
 
 COPY public/ /usr/share/nginx/html/
-RUN sed -i "s|__ENVIRONMENT__|$ENVIRONMENT|" /usr/share/nginx/html/index.html
+RUN rm -f /usr/share/nginx/html/50x.html && \
+    sed -i "s|__ENVIRONMENT__|$ENVIRONMENT|" /usr/share/nginx/html/index.html
