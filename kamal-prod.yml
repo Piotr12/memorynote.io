@@ -8,12 +8,10 @@ service: memorynote-prod
 image: memorynote-prod
 
 registry:
-  # The registry runs on the deploy host; it is unauthenticated because the
-  # image holds no credentials. Kamal requires these keys for non-localhost
-  # registries; docker login never challenges them.
-  server: 146.59.105.8:5000
-  username: anonymous
-  password: unauthenticated
+  # Kamal's local registry: kamal starts it on the machine that deploys and
+  # pulls it on the deploy host through an SSH port forward.
+  # https://kamal-deploy.org/docs/configuration/docker-registry/
+  server: localhost:5000
 
 servers:
   - 146.59.105.8
