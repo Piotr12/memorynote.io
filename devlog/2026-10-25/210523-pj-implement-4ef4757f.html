@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>21:05 pj-implement</title>
+<article>
+  <h2>21:05 Europe/Warsaw · pj-implement #3 · PR to dev ready except workflow push</h2>
+  <ul>
+    <li>Design review round 1: verdict changes; 3 blocking findings (proxy-risk wording, concurrency keying, kamal pin) plus 8 non-blocking, all fixed; design re-attached.</li>
+    <li>Implementation: static nginx page with build-time env marker, Dockerfile with guard, two kamal 2.12 app configs on the shared host proxy, host bootstrap (registry:3 on port 5000, passwordless-sudo check, docker group), tests (page, image, config cross-wiring), docs + 2 ADRs.</li>
+    <li>Created dev from main; PR #5 retargeted to dev, kept draft.</li>
+    <li>Blocked: the deploy token lacks the workflow scope, so commit 7fe7526 (ci.yml, deploy.yml) cannot be pushed; remote pj/3 is at d1920a9 without the workflows. Docker-based tests run in PR CI; local environment has no docker access.</li>
+  </ul>
+</article>
