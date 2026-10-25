@@ -27,13 +27,13 @@ flowchart LR
 
 ## Host
 
-The deploy host is `146.59.105.8`. The workflow authenticates as `debian`
+The deploy host is `146.59.105.8`. The workflow authenticates as `ubuntu`
 with the `SSH_DEPLOY_KEY` secret.
 
 | Component | Details |
 |---|---|
 | kamal-proxy | One container per host. It routes all app domains and issues Let's Encrypt certificates automatically. All kamal apps on the host share it. |
-| Registry | `registry:3` container on port 5000. Unauthenticated: the images hold no credentials. The `scripts/host-bootstrap.sh` script starts or creates it idempotently, gives it a restart policy, and adds the registry to the docker daemon's `insecure-registries` exactly once. If ufw is active, the script opens port 5000. |
+| Registry | `registry:3` container on port 5000. Unauthenticated: the images hold no credentials. The host runs it with a restart policy, and its docker daemon trusts it via `insecure-registries`. |
 | App containers | One per environment, on the shared `kamal` docker network. |
 
 ## Behavior

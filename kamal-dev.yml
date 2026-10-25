@@ -27,6 +27,6 @@ builder:
     ENVIRONMENT: dev
 
 ssh:
-  user: debian
+  user: ubuntu
   keys:
     - /home/runner/.ssh/deploy_key

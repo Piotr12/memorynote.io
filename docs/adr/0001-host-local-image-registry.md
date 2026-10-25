@@ -9,9 +9,9 @@ The image holds no credentials, so the registry needs no authentication.
 ## Decision
 
 We run a `registry:3` container on the deploy host, bound to port 5000 on
-all interfaces. The GitHub runner pushes to it over plain HTTP. The
-host bootstrap script creates the container idempotently and adds the
-registry to the docker daemon's `insecure-registries` exactly once.
+all interfaces. The GitHub runner pushes to it over plain HTTP. The host
+runs the container with a restart policy, and its docker daemon trusts the
+registry via `insecure-registries`.
 
 Kamal requires `registry.username` and `registry.password` in its config
 for non-localhost registries. We set them to `anonymous` and
@@ -23,7 +23,7 @@ succeeds and the values hold no privilege.
 - The registry is publicly reachable and unauthenticated. Anyone can
   pull the images and push to the image names. The images hold no
   secrets, so the exposure is the static page only.
-- The docker daemon on the deploy host carries a one-time configuration
-  change and one restart. Existing containers come back automatically.
+- The docker daemon on the deploy host carries the registry in
+  `insecure-registries`. A deploy never restarts the daemon.
 - Moving to an external registry later is a config change in the two
   kamal files and the workflow.
