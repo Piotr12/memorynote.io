@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>21:50 pj-implement</title>
+<article>
+  <h2>21:50 Europe/Warsaw · pj-implement #3 · workflows landed; CI green</h2>
+  <ul>
+    <li>Token gained the workflow scope; pushed the workflow commit (7fe7526). Three CI failures fixed: gitleaks not preinstalled on the runner (now installed from its release), page test raced nginx startup (added a readiness loop), and the image test found the base nginx 50x.html in the html dir (Dockerfile now removes it, per the spec&#39;s &#39;only the app page&#39; wording).</li>
+    <li>PR #5 is ready (non-draft) with final body; base dev, CI green on e9c00bd.</li>
+    <li>Merge #5 into dev; the push to dev runs the one-time host bootstrap and the dev deploy; then <a href="https://dev.memorynote.io">https://dev.memorynote.io</a> is testable.</li>
+  </ul>
+</article>
