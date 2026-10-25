@@ -1,0 +1,8 @@
+.git
+.github
+.pj
+.worktrees
+docs
+test
+scripts
+*.md

@@ -1,0 +1,34 @@
+# Kamal app for the prod environment: memorynote.io and www.memorynote.io.
+# Both hostnames serve the same app instance.
+# Deploy with: kamal deploy -C kamal-prod.yml
+# See docs/deployment.md for the pipeline.
+
+service: memorynote-prod
+
+image: memorynote-prod
+
+registry:
+  # The registry runs on the deploy host; it is unauthenticated because the
+  # image holds no credentials. Kamal requires these keys for non-localhost
+  # registries; docker login never challenges them.
+  server: 146.59.105.8:5000
+  username: anonymous
+  password: unauthenticated
+
+servers:
+  - 146.59.105.8
+
+proxy:
+  hosts:
+    - memorynote.io
+    - www.memorynote.io
+
+builder:
+  arch: amd64
+  args:
+    ENVIRONMENT: prod
+
+ssh:
+  user: debian
+  keys:
+    - /home/runner/.ssh/deploy_key
