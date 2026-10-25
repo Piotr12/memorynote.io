@@ -1,0 +1,28 @@
+---
+:roles:
+- web
+:hosts:
+- 146.59.105.8
+:primary_host: 146.59.105.8
+:version: d7c948bcf290731811f98a34072fac7cacb08dd6
+:repository: 146.59.105.8:5000/memorynote-dev
+:absolute_image: 146.59.105.8:5000/memorynote-dev:d7c948bcf290731811f98a34072fac7cacb08dd6
+:service_with_version: memorynote-dev-d7c948bcf290731811f98a34072fac7cacb08dd6
+:volume_args: []
+:ssh_options:
+  :user: debian
+  :port: 22
+  :keepalive: true
+  :keepalive_interval: 30
+  :keys:
+  - "/home/runner/.ssh/deploy_key"
+  :log_level: :fatal
+:sshkit: {}
+:builder:
+  arch: amd64
+  args:
+    ENVIRONMENT: dev
+:logging:
+- "--log-opt"
+- max-size="10m"
+exit=0

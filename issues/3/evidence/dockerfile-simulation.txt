@@ -1,0 +1,6 @@
+Simulation of the Dockerfile guard + substitution (docker unavailable locally).
+For ENVIRONMENT in dev, prod, and empty:
+ - guard 'test $ENVIRONMENT = dev -o $ENVIRONMENT = prod' passed for dev/prod,
+   rejected for empty (the build would fail).
+ - sed substitution produced exactly one marker (dev or prod), no placeholder left,
+   no cross-environment text.
