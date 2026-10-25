@@ -1,0 +1,48 @@
+name: deploy
+
+on:
+  push:
+    branches: [dev, main]
+  workflow_dispatch:
+    inputs:
+      env:
+        description: The environment to deploy
+        type: choice
+        options: [dev, prod]
+        required: true
+
+concurrency:
+  group: deploy-${{ github.event_name == 'workflow_dispatch' && inputs.env || github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      KAMAL_ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.env || github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+      KAMAL_CONFIG: kamal-${{ github.event_name == 'workflow_dispatch' && inputs.env || github.ref == 'refs/heads/main' && 'prod' || 'dev' }}.yml
+      HOST_IP: 146.59.105.8
+      REGISTRY_SERVER: 146.59.105.8:5000
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kamal
+        run: sudo gem install kamal --version 2.12.0 --no-document
+
+      - name: Configure the deploy key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$HOST_IP" >> ~/.ssh/known_hosts || true
+
+      - name: Trust the host registry from docker
+        run: |
+          echo "{ \"insecure-registries\": [\"$REGISTRY_SERVER\"] }" | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker
+
+      - name: Bootstrap the host
+        run: ssh -i ~/.ssh/deploy_key -o User=debian -o BatchMode=yes "$HOST_IP" 'sudo -n bash -s' < scripts/host-bootstrap.sh
+
+      - name: Deploy $KAMAL_ENV
+        run: kamal deploy -c "$KAMAL_CONFIG"
