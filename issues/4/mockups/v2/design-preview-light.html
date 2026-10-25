@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>memorynote.io — design system (v2, light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FCFCFB;
+  --surface:#FFFFFF;
+  --surface-2:#F5F5F4;
+  --text:#1C1917;
+  --text-2:#57534E;
+  --border:#E7E5E4;
+  --border-2:#D6D3D1;
+  --orange:#F97316;
+  --accent:#C2410C;
+  --accent-hover:#9A3412;
+  --on-accent:#FFFFFF;
+  --accent-soft:#FFF7ED;
+  --focus:#EA580C;
+  --font:"Inter",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 var(--font)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1024px){.wrap{padding:0 40px}}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--border)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:52px}
+.word{font-weight:600;font-size:15px;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.mark{width:10px;height:10px;border-radius:3px;background:var(--orange)}
+.crumb{font:500 13px/1 var(--font);color:var(--text-2)}
+
+/* layout */
+.layout{display:grid;grid-template-columns:1fr;gap:0;padding-top:24px}
+@media(min-width:768px){.layout{grid-template-columns:200px 1fr;gap:48px}}
+aside{padding-bottom:32px}
+@media(min-width:768px){aside{position:sticky;top:76px;align-self:start}}
+.mode{font:500 13px/1 var(--font);color:var(--text);background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:8px 12px;display:inline-block;margin-bottom:20px}
+.mode:hover{border-color:var(--text-2)}
+.mode:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.nav{display:flex;flex-direction:column;gap:2px}
+@media(max-width:767px){.nav{flex-direction:row;flex-wrap:wrap;gap:8px}}
+.nav a{font-size:14px;color:var(--text-2);text-decoration:none;padding:7px 10px;border-radius:8px}
+@media(max-width:767px){.nav a{border:1px solid var(--border);background:var(--surface)}}
+.nav a:hover{color:var(--text);background:var(--surface-2)}
+@media(max-width:767px){.nav a:hover{background:var(--accent-soft)}}
+
+/* sections */
+main{min-width:0}
+section{padding:28px 0;border-top:1px solid var(--border)}
+section:first-child{border-top:none;padding-top:8px}
+section h2{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;margin-bottom:4px;display:flex;align-items:baseline;gap:10px}
+section h2 .idx{font:400 12px/1 var(--mono);color:var(--text-2)}
+.section-lede{font-size:13px;color:var(--text-2);margin-bottom:16px}
+
+/* color */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{display:flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:6px 10px}
+.chip .sq{width:24px;height:24px;border-radius:6px;border:1px solid rgba(0,0,0,.1)}
+.chip .n{font:500 12px/1.3 var(--mono)}
+.chip .h{font:400 11px/1.3 var(--mono);color:var(--text-2)}
+table.tokens{width:100%;border-collapse:collapse;font-size:13px}
+.tokens th{text-align:left;font-weight:500;color:var(--text-2);font-size:12px;padding:6px 10px;border-bottom:1px solid var(--border-2)}
+.tokens td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.tokens td:first-child{font:500 12px/1.4 var(--mono)}
+.tokens .cell{display:flex;align-items:center;gap:8px;font:400 12px/1.4 var(--mono);white-space:nowrap}
+.tokens .dot{width:12px;height:12px;border-radius:4px;border:1px solid rgba(0,0,0,.12);flex:none}
+.aa{font:400 11px/1.4 var(--mono);color:var(--text-2)}
+
+/* type */
+.spec-strip{border:1px solid var(--border);background:var(--surface);border-radius:12px;padding:20px 20px 8px;margin-bottom:16px}
+.spec-strip .big{font-size:44px;line-height:1.1;font-weight:700;letter-spacing:-0.03em}
+.spec-strip .cap{font:400 12px/1.5 var(--mono);color:var(--text-2);padding:8px 0}
+table.scale{width:100%;border-collapse:collapse}
+.scale th{text-align:left;font-weight:500;font-size:12px;color:var(--text-2);padding:6px 10px;border-bottom:1px solid var(--border-2)}
+.scale td{padding:10px;border-bottom:1px solid var(--border)}
+.scale td.m{font:400 12px/1.4 var(--mono);color:var(--text-2);white-space:nowrap;width:150px}
+.s-d{font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.2}
+.s-h{font-size:20px;font-weight:600;line-height:1.3}
+.s-b{font-size:16px}
+.s-s{font-size:14px}
+.s-c{font-size:13px;font-weight:500;color:var(--text-2)}
+
+/* spacing + radius */
+.duo{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.duo{grid-template-columns:1fr 1fr;gap:32px}}
+.sub-h{font-size:13px;font-weight:600;margin-bottom:10px}
+.space-row{display:flex;align-items:center;gap:10px;padding:4px 0}
+.space-bar{height:9px;background:var(--accent-soft);border:1px solid var(--orange);border-radius:4px}
+.meta{font:400 12px/1.4 var(--mono);color:var(--text-2);min-width:34px}
+.radius-row{display:flex;gap:16px}
+.radius-item{width:104px}
+.radius-box{height:64px;background:var(--surface);border:1.5px solid var(--text-2)}
+.radius-item .meta{margin-top:8px}
+
+/* breakpoints */
+table.bp{width:100%;border-collapse:collapse;font-size:13px}
+.bp th{text-align:left;font-weight:500;font-size:12px;color:var(--text-2);padding:6px 10px;border-bottom:1px solid var(--border-2)}
+.bp td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.bp .px{font:500 13px/1.4 var(--mono);color:var(--accent)}
+@media(max-width:767px){.bp .use-col{display:none}}
+
+/* stage */
+.stage{border:1px solid var(--border-2);background:var(--surface);border-radius:12px;padding:20px}
+@media(min-width:768px){.stage{padding:28px}}
+.stage-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media(min-width:768px){.stage-grid{grid-template-columns:1fr 1fr;gap:32px}}
+.stage h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
+.stage h3 .tag{font:400 11px/1.3 var(--mono);color:var(--text-2)}
+.btn{display:inline-block;font:500 14px/1 var(--font);border-radius:8px;padding:10px 16px;border:1px solid transparent;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:var(--surface);color:var(--text);border-color:var(--border-2)}
+.btn-secondary:hover{border-color:var(--text-2)}
+.btn[disabled]{color:var(--text-2);background:var(--surface-2);border-color:var(--border);cursor:default}
+.gap{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px}
+.card h4{font-size:16px;font-weight:600}
+.card .sub{font:400 12px/1.5 var(--mono);color:var(--text-2);margin:2px 0 10px}
+.card p{font-size:14px;color:var(--text-2)}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.card .foot .date{font-size:12px;color:var(--text-2)}
+.link{color:var(--accent);text-decoration:underline;text-underline-offset:2px;font-size:13px}
+.field label{display:block;font-size:13px;font-weight:500;margin-bottom:6px}
+.field input{width:100%;max-width:320px;font:400 14px/1 var(--font);color:var(--text);background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:10px 12px}
+.field input::placeholder{color:var(--text-2)}
+.field input:focus-visible{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+.field .hint{font-size:12px;color:var(--text-2);margin-top:6px}
+
+/* footer */
+footer{border-top:1px solid var(--border);margin-top:48px;padding:24px 0 48px;color:var(--text-2)}
+footer .line1{font-size:13px}
+footer .line2{font:400 12px/1.6 var(--mono);margin-top:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <span class="word"><span class="mark"></span>memorynote.io</span>
+    <span class="crumb">design system</span>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <aside>
+    <button class="mode" type="button">Switch to dark</button>
+    <nav class="nav">
+      <a href="#color">Color</a>
+      <a href="#type">Typography</a>
+      <a href="#space">Spacing &amp; radius</a>
+      <a href="#breakpoints">Breakpoints</a>
+      <a href="#components">Components</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="color">
+      <h2><span class="idx">a</span>Color</h2>
+      <p class="section-lede">One leading color, a warm neutral ramp, and an accent that keeps AA contrast in both modes.</p>
+      <div class="chips">
+        <span class="chip"><span class="sq" style="background:#F97316"></span><span class="n">--orange</span><span class="h">#F97316</span></span>
+        <span class="chip"><span class="sq" style="background:#C2410C"></span><span class="n">--accent</span><span class="h">#C2410C</span></span>
+        <span class="chip"><span class="sq" style="background:#FFF7ED"></span><span class="n">--accent-soft</span><span class="h">#FFF7ED</span></span>
+        <span class="chip"><span class="sq" style="background:#FCFCFB"></span><span class="n">--bg</span><span class="h">#FCFCFB</span></span>
+        <span class="chip"><span class="sq" style="background:#FFFFFF"></span><span class="n">--surface</span><span class="h">#FFFFFF</span></span>
+        <span class="chip"><span class="sq" style="background:#1C1917"></span><span class="n">--text</span><span class="h">#1C1917</span></span>
+        <span class="chip"><span class="sq" style="background:#57534E"></span><span class="n">--text-2</span><span class="h">#57534E</span></span>
+        <span class="chip"><span class="sq" style="background:#E7E5E4"></span><span class="n">--border</span><span class="h">#E7E5E4</span></span>
+      </div>
+      <table class="tokens">
+        <tr><th>token</th><th>light</th><th>dark</th><th>contrast (AA)</th></tr>
+        <tr><td>--orange</td><td class="cell"><span class="dot" style="background:#F97316"></span>#F97316</td><td class="cell"><span class="dot" style="background:#F97316"></span>#F97316</td><td class="aa">brand, large use only</td></tr>
+        <tr><td>--accent</td><td class="cell"><span class="dot" style="background:#C2410C"></span>#C2410C</td><td class="cell"><span class="dot" style="background:#FB923C"></span>#FB923C</td><td class="aa">5.18 : 1 · 8.73 : 1</td></tr>
+        <tr><td>--bg</td><td class="cell"><span class="dot" style="background:#FCFCFB"></span>#FCFCFB</td><td class="cell"><span class="dot" style="background:#0C0A09"></span>#0C0A09</td><td class="aa">text on bg 17.04 : 1</td></tr>
+        <tr><td>--surface</td><td class="cell"><span class="dot" style="background:#FFFFFF"></span>#FFFFFF</td><td class="cell"><span class="dot" style="background:#1C1917"></span>#1C1917</td><td class="aa">cards, inputs</td></tr>
+        <tr><td>--text-2</td><td class="cell"><span class="dot" style="background:#57534E"></span>#57534E</td><td class="cell"><span class="dot" style="background:#A8A29E"></span>#A8A29E</td><td class="aa">7.43 : 1 · 7.83 : 1</td></tr>
+      </table>
+    </section>
+
+    <section id="type">
+      <h2><span class="idx">b</span>Typography</h2>
+      <p class="section-lede">Inter, self-hosted. One family carries every role; mono carries token values.</p>
+      <div class="spec-strip">
+        <div class="big">A note, kept.</div>
+        <div class="cap">Inter 44 / 700 — display, the boldest role on the page</div>
+      </div>
+      <table class="scale">
+        <tr><th>role</th><th>sample</th></tr>
+        <tr><td class="m">24 / 600 / 1.3<br>heading</td><td class="s-h">Spring plan, first draft</td></tr>
+        <tr><td class="m">16 / 400 / 1.6<br>body</td><td class="s-b">Write it down before it walks away.</td></tr>
+        <tr><td class="m">14 / 400 / 1.6<br>small</td><td class="s-s">Faster than Tuesday. The river route held up.</td></tr>
+        <tr><td class="m">13 / 500 / 1.4<br>caption</td><td class="s-c">edited 12 min ago</td></tr>
+      </table>
+    </section>
+
+    <section id="space">
+      <h2><span class="idx">c</span>Spacing &amp; radius</h2>
+      <p class="section-lede">A 4 px base unit and two radii: 8 for controls, 12 for cards.</p>
+      <div class="duo">
+        <div>
+          <div class="sub-h">Spacing</div>
+          <div class="space-row"><div class="meta">4</div><div class="space-bar" style="width:4px"></div></div>
+          <div class="space-row"><div class="meta">8</div><div class="space-bar" style="width:8px"></div></div>
+          <div class="space-row"><div class="meta">12</div><div class="space-bar" style="width:12px"></div></div>
+          <div class="space-row"><div class="meta">16</div><div class="space-bar" style="width:16px"></div></div>
+          <div class="space-row"><div class="meta">24</div><div class="space-bar" style="width:24px"></div></div>
+          <div class="space-row"><div class="meta">32</div><div class="space-bar" style="width:32px"></div></div>
+          <div class="space-row"><div class="meta">48</div><div class="space-bar" style="width:48px"></div></div>
+          <div class="space-row"><div class="meta">64</div><div class="space-bar" style="width:64px"></div></div>
+        </div>
+        <div>
+          <div class="sub-h">Corner radius</div>
+          <div class="radius-row">
+            <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="meta">8 px<br>controls</div></div>
+            <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="meta">12 px<br>cards</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="breakpoints">
+      <h2><span class="idx">d</span>Breakpoints</h2>
+      <p class="section-lede">Mobile-first. Four stops.</p>
+      <table class="bp">
+        <tr><th>px</th><th class="use-col">applies to</th></tr>
+        <tr><td class="px">640</td><td class="use-col">small phones up</td></tr>
+        <tr><td class="px">768</td><td class="use-col">tablets up — sidebar layout appears</td></tr>
+        <tr><td class="px">1024</td><td class="use-col">laptops up</td></tr>
+        <tr><td class="px">1280</td><td class="use-col">desktop up, content max width</td></tr>
+      </table>
+    </section>
+
+    <section id="components">
+      <h2><span class="idx">e</span>Components</h2>
+      <p class="section-lede">The four core components every future page is built from.</p>
+      <div class="stage">
+        <div class="stage-grid">
+          <div>
+            <h3>Button <span class="tag">radius 8</span></h3>
+            <div class="gap">
+              <button class="btn btn-primary" type="button">Save note</button>
+              <button class="btn btn-secondary" type="button">Preview</button>
+              <button class="btn btn-secondary" type="button" disabled>Delete</button>
+            </div>
+          </div>
+          <div>
+            <h3>Input <span class="tag">radius 8</span></h3>
+            <div class="field">
+              <label for="t">Note title</label>
+              <input id="t" type="text" placeholder="e.g. Ideas for the spring plan">
+              <div class="hint">Visible on every page you share.</div>
+            </div>
+          </div>
+          <div>
+            <h3>Card <span class="tag">radius 12</span></h3>
+            <div class="card">
+              <h4>Morning run</h4>
+              <div class="sub">5.2 km · 28:14</div>
+              <p>Faster than Tuesday. The route along the river held up.</p>
+              <div class="foot"><a class="link" href="#">Edit note</a><span class="date">Oct 25</span></div>
+            </div>
+          </div>
+          <div>
+            <h3>Text <span class="tag">roles</span></h3>
+            <p class="s-b">Notes link to each other. <a class="link" href="#">Open the linked note</a> to keep the trail.</p>
+            <p class="s-c" style="margin-top:8px">last opened on the desk machine</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="line1">built on dgxspark in Jozefoslaw.</div>
+      <div class="line2">branch: main · commit: 8f3a2c1</div>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
