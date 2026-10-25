@@ -41,8 +41,5 @@ jobs:
           echo "{ \"insecure-registries\": [\"$REGISTRY_SERVER\"] }" | sudo tee /etc/docker/daemon.json
           sudo systemctl restart docker
 
-      - name: Bootstrap the host
-        run: ssh -i ~/.ssh/deploy_key -o User=debian -o BatchMode=yes "$HOST_IP" 'sudo -n bash -s' < scripts/host-bootstrap.sh
-
       - name: Deploy $KAMAL_ENV
         run: kamal deploy -c "$KAMAL_CONFIG"
