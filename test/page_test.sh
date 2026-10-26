@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Builds the app image for dev and prod and checks the served page.
+# Builds the app image for dev and prod and checks the served page
+# and the health endpoint.
 # The page must say "Hello world", show the right environment marker,
-# mention neither the other environment nor the raw placeholder,
-# and a build without ENVIRONMENT must fail.
+# and mention neither the other environment nor the raw placeholder.
+# The container must answer /up with a 200.
+# A build without ENVIRONMENT must fail.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -20,6 +22,8 @@ serve() { # <env>: prints the served page on stdout
     sleep 0.5
   done
   [ -n "${body:-}" ] || fail "$env: the page did not come up on 127.0.0.1:$port"
+  curl -fsS "http://127.0.0.1:$port/up" >/dev/null \
+    || fail "$env: the /up health endpoint did not answer 200"
   printf '%s\n' "$body"
 }
 

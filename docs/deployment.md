@@ -41,6 +41,9 @@ with the `SSH_DEPLOY_KEY` secret.
 
 ## Behavior
 
+- The app container answers the proxy's health check. The proxy polls
+  `GET /up` on the new container and the deploy fails if it does not
+  answer 200 within 30 seconds.
 - A newer push to the same branch cancels an in-flight deploy of the
   same environment. Concurrency is keyed per environment, so a manual
   dispatch of the other environment never cancels it.
