@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The image must hold no credentials.
 # It may set no credential-like environment variable, and the html
-# directory must hold only the page.
+# directory must hold only the page and the health endpoint file.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -21,7 +21,8 @@ while IFS= read -r line; do
 done <<< "$app_env"
 
 files=$(docker run --rm "$IMAGE" ls -1 /usr/share/nginx/html/)
-[ "$files" = "index.html" ] || fail "the html directory holds: $files"
+expected="$(printf 'index.html\nup')"
+[ "$files" = "$expected" ] || fail "the html directory holds: $files"
 
 docker rmi -f "$IMAGE" >/dev/null
 echo "image test: ok"
