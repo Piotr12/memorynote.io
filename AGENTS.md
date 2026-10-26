@@ -2,10 +2,10 @@
 
 ## Project
 
-- Stack: TBD (the repo has no code yet)
-- Build: TBD
-- Lint: TBD
-- Test: TBD
+- Stack: static HTML, nginx, kamal 2.12, GitHub Actions
+- Build: `docker build --build-arg ENVIRONMENT=dev -t memorynote-dev .`
+- Lint: `actionlint`, `gitleaks detect --source . --exit-code 1`, `kamal config -c kamal-dev.yml`
+- Test: `bash test/page_test.sh && bash test/image_test.sh`
 
 - Lint docs (STE): `vale sync && vale docs/ AGENTS.md`
 - Lint Markdown: `npx markdownlint-cli2 "docs/**/*.md" AGENTS.md`

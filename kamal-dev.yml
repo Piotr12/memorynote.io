@@ -1,0 +1,30 @@
+# Kamal app for the dev environment: dev.memorynote.io.
+# Deploy with: kamal deploy -C kamal-dev.yml
+# See docs/deployment.md for the pipeline.
+
+service: memorynote-dev
+
+image: memorynote-dev
+
+registry:
+  # Kamal's local registry: kamal starts it on the machine that deploys and
+  # pulls it on the deploy host through an SSH port forward.
+  # https://kamal-deploy.org/docs/configuration/docker-registry/
+  server: localhost:5000
+
+servers:
+  - 146.59.105.8
+
+proxy:
+  hosts:
+    - dev.memorynote.io
+
+builder:
+  arch: amd64
+  args:
+    ENVIRONMENT: dev
+
+ssh:
+  user: ubuntu
+  keys:
+    - /home/runner/.ssh/deploy_key

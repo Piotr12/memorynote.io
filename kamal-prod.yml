@@ -1,0 +1,32 @@
+# Kamal app for the prod environment: memorynote.io and www.memorynote.io.
+# Both hostnames serve the same app instance.
+# Deploy with: kamal deploy -C kamal-prod.yml
+# See docs/deployment.md for the pipeline.
+
+service: memorynote-prod
+
+image: memorynote-prod
+
+registry:
+  # Kamal's local registry: kamal starts it on the machine that deploys and
+  # pulls it on the deploy host through an SSH port forward.
+  # https://kamal-deploy.org/docs/configuration/docker-registry/
+  server: localhost:5000
+
+servers:
+  - 146.59.105.8
+
+proxy:
+  hosts:
+    - memorynote.io
+    - www.memorynote.io
+
+builder:
+  arch: amd64
+  args:
+    ENVIRONMENT: prod
+
+ssh:
+  user: ubuntu
+  keys:
+    - /home/runner/.ssh/deploy_key

@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [dev, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint the workflows
+        run: |
+          url=$(curl -fsSL https://api.github.com/repos/rhysd/actionlint/releases/latest | grep -o '"browser_download_url": *"[^"]*linux_amd64[^"]*"' | cut -d'"' -f4)
+          curl -fsSL "$url" | tar xz
+          ./actionlint
+
+      - name: Install kamal
+        run: sudo gem install kamal --version 2.12.0 --no-document
+
+      - name: Validate the kamal configs
+        run: |
+          kamal config -c kamal-dev.yml >/dev/null
+          kamal config -c kamal-prod.yml >/dev/null
+
+      - name: Scan for credentials
+        run: |
+          url=$(curl -fsSL https://api.github.com/repos/gitleaks/gitleaks/releases/latest | grep -o '"browser_download_url": *"[^"]*linux_x64[^"]*"' | cut -d'"' -f4)
+          curl -fsSL "$url" | tar xz
+          ./gitleaks detect --source . --redact --exit-code 1 -v
+
+      - name: Test the page
+        run: bash test/page_test.sh
+
+      - name: Test the image
+        run: bash test/image_test.sh
+
+      - name: Test the configs
+        run: bash test/config_test.sh
