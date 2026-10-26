@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>12:43 pj-implement</title>
+<article>
+  <h2>12:43 Europe/Warsaw · pj-implement 4 · stopped</h2>
+  <ul>
+    <li>Design review round 2: approve. B1 (static export on the existing nginx image, port 80) and B2 (per-section content assertions) fixed in the design before implementation. Non-blocking notes applied: mobile-first CSS with min-width queries, one e2e viewport set (390/640/768/1440), footer e2e reads NEXT_PUBLIC_BUILD_* from env.</li>
+    <li>Implementation complete on pj/4 (commit 33ffa81): Next.js static export, token CSS as the single source, persistent theme toggle, self-hosted Inter, ADR 0003. Checks: build, lint, typecheck, 31 unit tests, 12 e2e tests, mutation 98.85% (one justified survivor: the WCAG 0.03928 sRGB threshold is unreachable with 8-bit channels), docker page and image tests, actionlint, vale on new docs.</li>
+    <li>Stopped per protocol: measured diff is 1,982 non-test lines (1,881 counting the e2e scripts as test tooling) vs the medium limit of 800. The estimate was never made before claiming — the criteria count (7/8) passed but the line count was not checked. PR #11 left as a draft. Evidence at attachments:issues/4/evidence. Awaiting the human: continue (single PR) or pj-decompose.</li>
+  </ul>
+</article>
