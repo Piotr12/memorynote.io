@@ -1,7 +1,8 @@
 # Deployment
 
-The app is a static page. A push to `dev` or `main` builds the image on a
-GitHub runner and deploys it to the deploy host with kamal.
+The app is a Next.js static export served by nginx. A push to `dev` or
+`main` builds the image on a GitHub runner and deploys it to the deploy
+host with kamal.
 
 ## Environments
 
@@ -12,6 +13,19 @@ GitHub runner and deploys it to the deploy host with kamal.
 
 A manual dispatch deploys either environment. A deploy of one environment
 never touches the other.
+
+## Build
+
+The image is two-stage. `node:22-alpine` runs `npm ci` and `next build`
+with `output: "export"`. `nginx:1.27-alpine` serves the export from
+`out/` on port 80. The build reads `NEXT_PUBLIC_BUILD_BRANCH` and
+`NEXT_PUBLIC_BUILD_COMMIT` and inlines them into the footer.
+
+Kamal reads build args from the config file only. The checked-in kamal
+configs carry empty defaults. The deploy workflow stamps the branch and
+commit of the pushed ref into the config. The footer of the deployed
+site then shows both. A manual deploy without stamping serves the empty
+defaults, and the footer shows its first line only.
 
 ## Pipeline
 

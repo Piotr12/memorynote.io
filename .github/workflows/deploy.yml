@@ -28,6 +28,15 @@ jobs:
       - name: Install kamal
         run: sudo gem install kamal --version 2.12.0 --no-document
 
+      # Kamal reads build args from the config file only. The workflow
+      # stamps the branch and commit of the pushed ref into it, so the
+      # footer of the deployed site shows them.
+      - name: Stamp the build identity into the kamal config
+        run: |
+          sed -i 's|NEXT_PUBLIC_BUILD_BRANCH: ""|NEXT_PUBLIC_BUILD_BRANCH: "'"$GITHUB_REF_NAME"'"|' "$KAMAL_CONFIG"
+          sed -i 's|NEXT_PUBLIC_BUILD_COMMIT: ""|NEXT_PUBLIC_BUILD_COMMIT: "'"$GITHUB_SHA"'"|' "$KAMAL_CONFIG"
+          grep -A3 'args:' "$KAMAL_CONFIG"
+
       - name: Configure the deploy key
         run: |
           mkdir -p ~/.ssh

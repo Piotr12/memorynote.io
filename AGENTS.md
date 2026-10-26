@@ -2,10 +2,11 @@
 
 ## Project
 
-- Stack: static HTML, nginx, kamal 2.12, GitHub Actions
-- Build: `docker build --build-arg ENVIRONMENT=dev -t memorynote-dev .`
+- Stack: Next.js (App Router, static export), nginx, kamal 2.12, GitHub Actions
+- Build: `docker build -t memorynote-dev .`
 - Lint: `actionlint`, `gitleaks detect --source . --exit-code 1`, `kamal config -c kamal-dev.yml`
-- Test: `bash test/page_test.sh && bash test/image_test.sh`
+- Test: `bash test/page_test.sh && bash test/image_test.sh && bash test/config_test.sh`
+- App checks: `npm ci && npm run lint && npm run test && npm run test:mutation && npm run e2e`
 
 - Lint docs (STE): `vale sync && vale docs/ AGENTS.md`
 - Lint Markdown: `npx markdownlint-cli2 "docs/**/*.md" AGENTS.md`
