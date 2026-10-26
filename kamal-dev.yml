@@ -25,7 +25,10 @@ proxy:
 builder:
   arch: amd64
   args:
-    ENVIRONMENT: dev
+    # Stamped by the deploy workflow with the branch and commit of the
+    # pushed ref. The footer shows them; empty values omit the build line.
+    NEXT_PUBLIC_BUILD_BRANCH: ""
+    NEXT_PUBLIC_BUILD_COMMIT: ""
 
 ssh:
   user: ubuntu

@@ -1,1 +1,8 @@
 .worktrees/
+node_modules/
+.next/
+out/
+.stryker-tmp/
+test-results/
+tsconfig.tsbuildinfo
+test/evidence/
