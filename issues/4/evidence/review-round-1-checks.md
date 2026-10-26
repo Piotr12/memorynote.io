@@ -1,8 +1,9 @@
 # pj-review round 1 — PR #11 (issue #4), 2026-10-26
 
-Verdict: 1 blocking, 11 non-blocking (5 in the review, 6 in the supplement).
+Verdict: 1 blocking, 20 non-blocking (5 review + 6 supplement + 9 supplement 2).
 Review: https://github.com/Piotr12/memorynote.io/pull/11#pullrequestreview-5657798888
 Supplement: https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-6425965808
+Supplement 2: https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-6426659088
 
 ## Checks (fresh worktree at 8e139e7)
 
@@ -13,6 +14,7 @@ Supplement: https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-642596
 | test/image_test.sh | pass |
 | test/config_test.sh | pass |
 | npm run lint (eslint + tsc) | pass |
+| npm run lint after `rm -rf .next` (fresh-clone check) | pass |
 | unit tests (vitest) | 31 pass |
 | e2e (playwright, fresh stamped build) | 12 pass |
 | mutation (stryker) | 98.85%, 1 documented survivor, threshold 98 |
@@ -23,38 +25,45 @@ Supplement: https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-642596
 | markdownlint-cli2 docs/ AGENTS.md | identical to main baseline |
 | kamal config -c kamal-dev.yml | not run locally (needs ruby); CI covers it |
 
-## Findings (review)
+## Findings (review, 1B+5NB)
 
 - Blocking: deploy.yml stamp step lacks the fail-fast guard required by the
   approved design (design.md lines 112–115, 199); the deployment.md Pipeline
   diagram lacks the stamp step; not recorded in Agent decisions.
-- Non-blocking: type scale table drops the role names shown in mockup v2
-  (e2e asserts only the meta strings).
-- Non-blocking: AGENTS.md App checks chain fails on a fresh checkout (e2e
-  needs a stamped out/ and matching env vars; the playwright.config.ts
-  comment claims the e2e run builds).
-- Non-blocking: reuseExistingServer lets a local e2e run silently reuse a
-  stale server on 4173 (demonstrated during this review).
-- Non-blocking: tautological assertion in tokens.test.ts (cannot fail).
-- Non-blocking: no-op ternary in the nav label lookup (page.tsx line 52).
+- Non-blocking: type scale table drops the role names shown in mockup v2.
+- Non-blocking: AGENTS.md App checks chain fails on a fresh checkout.
+- Non-blocking: reuseExistingServer lets a local e2e run reuse a stale
+  server on 4173 (demonstrated during this review).
+- Non-blocking: tautological assertion in tokens.test.ts.
+- Non-blocking: no-op ternary in the nav label lookup.
 
-## Findings (supplement, from the independent first pass)
+## Findings (supplement, 6NB)
 
-- Non-blocking: screenshots.mjs captures 2 of the 4 design-mandated
-  viewports; 640/768 evidence screenshots missing (design.md lines 94–95,
-  167–168, 182–183); unrecorded.
-- Non-blocking: --space-* tokens declared but consumed zero times; layout
-  rules hardcode px values.
-- Non-blocking: the no-flash e2e auto-retries, so a post-paint script would
-  still pass (behaviour itself is correct).
-- Non-blocking: input/secondary-button borders ≈1.49:1 (light) and ≈2.26:1
-  (dark), below WCAG 1.4.11's 3:1 non-text minimum (spec line 30 AA);
-  the approved mockup uses the same tokens, so the human may waive it.
-- Non-blocking: Dockerfile COPY . . after npm ci with .dockerignore missing
-  node_modules/out (local builds can shadow installed dependencies).
-- Non-blocking: PR body Agent decisions names BUILD_BRANCH/BUILD_COMMIT;
-  the implementation uses NEXT_PUBLIC_BUILD_* (justified, unrecorded).
+- screenshots.mjs captures 2 of the 4 design-mandated viewports.
+- --space-* tokens declared but consumed zero times.
+- The no-flash e2e auto-retries, so it cannot fail.
+- Input/secondary-button borders ≈1.49:1 light / ≈2.26:1 dark, below
+  WCAG 1.4.11 3:1 (approved mockup uses the same tokens; human may waive).
+- Dockerfile COPY . . after npm ci; .dockerignore missing node_modules/out.
+- PR body names BUILD_* but the implementation uses NEXT_PUBLIC_BUILD_*.
 
-Dropped after verification: serve.mjs path guard (Node's URL class
-collapses %2e/%2F dot segments; boundary tested live, safe) and the deploy
-concurrency group (expression resolves per environment correctly).
+## Findings (supplement 2, 9NB)
+
+- Inline user-facing copy in the spec-strip caption (page.tsx:122).
+- Display copy in the tokens.ts data module (breakpoint uses, notes,
+  samples).
+- Magic number: style={{ marginTop: 8 }} (page.tsx:280).
+- README checks table: screenshots are not part of npm run e2e.
+- Theme toggle label wrong on first paint in dark mode (state init).
+- Font assertion in preview.spec.ts cannot fail (tautology).
+- contrast.test.ts AA pairings hardcode hex instead of token values.
+- colorTokens holds 5 of 13 CSS color tokens; dark --text #fafafa drifts
+  from mockup v2 #FAFAF9 and no test can see it.
+- page.tsx comment + PR body claim the meta refresh is hoisted into
+  <head>; App Router renders it in <body>.
+
+Dropped after verification:
+- serve.mjs path guard (URL class collapses %2e/%2F; tested live, safe).
+- deploy concurrency group (resolves per environment correctly).
+- next-env.d.ts → .next/types imports before build (lint passes on a fresh
+  clone; skipLibCheck suppresses the unresolved .d.ts imports).
