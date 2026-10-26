@@ -5,5 +5,4 @@ out/
 .stryker-tmp/
 test-results/
 tsconfig.tsbuildinfo
-.vale/styles/
 test/evidence/
