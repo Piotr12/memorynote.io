@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # The dev and prod kamal configs must target different apps, images and
 # domains, so a dev deploy can never replace the prod app.
+# Both configs must enable proxy TLS, so the domains serve HTTPS.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -20,6 +21,8 @@ checks = {
     "prod environment arg": prod["builder"]["args"]["ENVIRONMENT"] == "prod",
     "same registry": dev["registry"]["server"] == prod["registry"]["server"],
     "same servers": dev["servers"] == prod["servers"],
+    "dev proxy ssl": dev["proxy"].get("ssl") is True,
+    "prod proxy ssl": prod["proxy"].get("ssl") is True,
 }
 bad = [name for name, ok in checks.items() if not ok]
 if bad:
