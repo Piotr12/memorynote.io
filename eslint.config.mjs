@@ -4,7 +4,15 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: [".next/", "out/", "node_modules/", "coverage/", "evidence/"],
+    ignores: [
+      ".next/",
+      ".stryker-tmp/",
+      "coverage/",
+      "evidence/",
+      "node_modules/",
+      "out/",
+      "test-results/",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
