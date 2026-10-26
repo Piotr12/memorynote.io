@@ -1,7 +1,8 @@
 # pj-review round 1 — PR #11 (issue #4), 2026-10-26
 
-Verdict: 1 blocking, 5 non-blocking. Review:
-https://github.com/Piotr12/memorynote.io/pull/11#pullrequestreview-5657798888
+Verdict: 1 blocking, 11 non-blocking (5 in the review, 6 in the supplement).
+Review: https://github.com/Piotr12/memorynote.io/pull/11#pullrequestreview-5657798888
+Supplement: https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-6425965808
 
 ## Checks (fresh worktree at 8e139e7)
 
@@ -22,7 +23,7 @@ https://github.com/Piotr12/memorynote.io/pull/11#pullrequestreview-5657798888
 | markdownlint-cli2 docs/ AGENTS.md | identical to main baseline |
 | kamal config -c kamal-dev.yml | not run locally (needs ruby); CI covers it |
 
-## Findings
+## Findings (review)
 
 - Blocking: deploy.yml stamp step lacks the fail-fast guard required by the
   approved design (design.md lines 112–115, 199); the deployment.md Pipeline
@@ -36,3 +37,24 @@ https://github.com/Piotr12/memorynote.io/pull/11#pullrequestreview-5657798888
   stale server on 4173 (demonstrated during this review).
 - Non-blocking: tautological assertion in tokens.test.ts (cannot fail).
 - Non-blocking: no-op ternary in the nav label lookup (page.tsx line 52).
+
+## Findings (supplement, from the independent first pass)
+
+- Non-blocking: screenshots.mjs captures 2 of the 4 design-mandated
+  viewports; 640/768 evidence screenshots missing (design.md lines 94–95,
+  167–168, 182–183); unrecorded.
+- Non-blocking: --space-* tokens declared but consumed zero times; layout
+  rules hardcode px values.
+- Non-blocking: the no-flash e2e auto-retries, so a post-paint script would
+  still pass (behaviour itself is correct).
+- Non-blocking: input/secondary-button borders ≈1.49:1 (light) and ≈2.26:1
+  (dark), below WCAG 1.4.11's 3:1 non-text minimum (spec line 30 AA);
+  the approved mockup uses the same tokens, so the human may waive it.
+- Non-blocking: Dockerfile COPY . . after npm ci with .dockerignore missing
+  node_modules/out (local builds can shadow installed dependencies).
+- Non-blocking: PR body Agent decisions names BUILD_BRANCH/BUILD_COMMIT;
+  the implementation uses NEXT_PUBLIC_BUILD_* (justified, unrecorded).
+
+Dropped after verification: serve.mjs path guard (Node's URL class
+collapses %2e/%2F dot segments; boundary tested live, safe) and the deploy
+concurrency group (expression resolves per environment correctly).
