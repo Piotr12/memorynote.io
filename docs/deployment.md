@@ -7,8 +7,8 @@ GitHub runner and deploys it to the deploy host with kamal.
 
 | Environment | Branch | Domains | Kamal app | Image |
 |---|---|---|---|---|
-| dev | `dev` | `dev.memorynote.io` | `memorynote-dev` | `146.59.105.8:5000/memorynote-dev` |
-| prod | `main` | `memorynote.io`, `www.memorynote.io` | `memorynote-prod` | `146.59.105.8:5000/memorynote-prod` |
+| dev | `dev` | `dev.memorynote.io` | `memorynote-dev` | `localhost:5000/memorynote-dev` |
+| prod | `main` | `memorynote.io`, `www.memorynote.io` | `memorynote-prod` | `localhost:5000/memorynote-prod` |
 
 A manual dispatch deploys either environment. A deploy of one environment
 never touches the other.
@@ -19,11 +19,15 @@ never touches the other.
 flowchart LR
   A[push to dev or main] --> B[GitHub Actions]
   B --> C[build image with buildx]
-  C --> D[push to registry on 146.59.105.8:5000]
+  C --> D[push to the kamal registry on the runner]
   D --> E[kamal deploy over SSH]
   E --> F[kamal-proxy routes the domains]
   F --> G[(app container on the kamal network)]
 ```
+
+The registry runs on the GitHub runner, not on the deploy host. Kamal
+starts it as part of every deploy and the deploy host pulls the image
+through an SSH port forward to `127.0.0.1:5000`.
 
 ## Host
 
@@ -33,7 +37,6 @@ with the `SSH_DEPLOY_KEY` secret.
 | Component | Details |
 |---|---|
 | kamal-proxy | One container per host. It routes all app domains and issues Let's Encrypt certificates automatically. All kamal apps on the host share it. |
-| Registry | `registry:3` container on port 5000. Unauthenticated: the images hold no credentials. The host runs it with a restart policy, and its docker daemon trusts it via `insecure-registries`. |
 | App containers | One per environment, on the shared `kamal` docker network. |
 
 ## Behavior
@@ -48,9 +51,9 @@ with the `SSH_DEPLOY_KEY` secret.
 - Kamal reuses the running proxy as long as it is at least v0.9.2. An
   older proxy makes the deploy fail visibly. A manual `kamal proxy
   reboot` takes every app on the host down briefly.
-- Each deploy prunes the app's old containers and images. It does not
-  prune the registry. At this image size the growth is negligible.
+- Each deploy prunes the app's old containers and images on the host.
+  The registry runs on the ephemeral runner, so it keeps no history.
 - `docs/adr/0002-shared-kamal-proxy-for-all-apps.md` records the proxy
   choice.
-- `docs/adr/0001-host-local-image-registry.md` records the registry
+- `docs/adr/0001-kamal-local-image-registry.md` records the registry
   choice.
