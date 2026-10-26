@@ -18,6 +18,9 @@ servers:
 proxy:
   hosts:
     - dev.memorynote.io
+  # Terminate TLS with a Let's Encrypt certificate.
+  # The proxy redirects HTTP to HTTPS.
+  ssl: true
 
 builder:
   arch: amd64
