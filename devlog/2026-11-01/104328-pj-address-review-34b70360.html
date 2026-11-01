@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>10:43 pj-address-review</title>
+<article>
+  <h2>10:43 Europe/Warsaw · pj-address-review PR #11 · fixed: 14, declined: 1, asked: 0</h2>
+  <ul>
+    <li>Replied to all 6 review threads and posted the summary: <a href="https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-6556259758">https://github.com/Piotr12/memorynote.io/pull/11#issuecomment-6556259758</a></li>
+    <li>Fixed 6 threads (deploy stamp guard 08c3c96+f6fc564, type roles 4dffefd+0af2bc2, self-contained e2e b9e1dcf, stale server af15ab6, tautology 65826f4, no-op conditional af38654) and 8 supplement findings (dockerignore 307e551, served-bytes no-flash test 4cc562b, font assertion be05429, theme toggle 7a8045f, border contrast 58cd87a, spacing consumption 85f2a4d, caption margin f2e5a4c, README rows a1cee7d); declined 1 (meta refresh is in head of the built export)</li>
+    <li>The theme-toggle useState initializer (0c21c1f) broke React 19 hydration and stripped data-theme; superseded by the useSyncExternalStore mirror in 7a8045f, verified in a real browser</li>
+    <li>Checks green on a fresh checkout: npm ci, lint, 33 unit, mutation 98.85%, 12 e2e, page/image/config docker tests, gitleaks, actionlint via docker; kamal CLI unavailable locally, config_test.sh validates the kamal configs</li>
+  </ul>
+</article>
