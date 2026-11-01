@@ -20,6 +20,7 @@
   --text-2: #57534e;
   --border: #e7e5e4;
   --border-2: #d6d3d1;
+  --border-strong: #78716c;
 
   /* typography */
   --font: "Inter", system-ui, sans-serif;
@@ -62,6 +63,7 @@
   --text-2: #a8a29e;
   --border: #44403c;
   --border-2: #57534e;
+  --border-strong: #78716c;
 }
 
 /* Inter, self-hosted, one variable file, all weights. font-display: block  */
@@ -589,7 +591,7 @@ table.bp {
 .btn-secondary {
   background: var(--surface);
   color: var(--text);
-  border-color: var(--border-2);
+  border-color: var(--border-strong);
 }
 
 .btn-secondary:hover {
@@ -668,7 +670,7 @@ table.bp {
   font: 400 14px/1 var(--font);
   color: var(--text);
   background: var(--surface);
-  border: 1px solid var(--border-2);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-control);
   padding: 10px 12px;
 }

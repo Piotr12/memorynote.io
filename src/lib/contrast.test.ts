@@ -99,4 +99,17 @@ describe("contrastRatio", () => {
       contrastRatio(colorToken("--orange").dark, colorToken("--bg").dark),
     ).toBeGreaterThanOrEqual(AA_LARGE);
   });
+
+  // WCAG 1.4.11: non-text contrast of component boundaries, 3:1 in both
+  // modes. The input and the secondary button carry the border.
+  it("keeps the non-text minimum for the component borders on surface", () => {
+    const border = colorToken("--border-strong");
+    const surface = colorToken("--surface");
+    expect(contrastRatio(border.light, surface.light)).toBeGreaterThanOrEqual(
+      AA_LARGE,
+    );
+    expect(contrastRatio(border.dark, surface.dark)).toBeGreaterThanOrEqual(
+      AA_LARGE,
+    );
+  });
 });

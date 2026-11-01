@@ -33,6 +33,7 @@ export const colorTokens: ColorToken[] = [
   { name: "--text-2", light: "#57534E", dark: "#A8A29E", note: "ratioOnBg" },
   { name: "--border", light: "#E7E5E4", dark: "#44403C" },
   { name: "--border-2", light: "#D6D3D1", dark: "#57534E" },
+  { name: "--border-strong", light: "#78716C", dark: "#78716C" },
 ];
 
 export function colorToken(name: string): ColorToken {
