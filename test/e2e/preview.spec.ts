@@ -168,6 +168,9 @@ test.describe("content", () => {
       for (const meta of ["24 / 600 / 1.3", "16 / 400 / 1.6", "14 / 400 / 1.6", "13 / 500 / 1.4"]) {
         await expect(type.getByText(meta, { exact: true })).toBeVisible();
       }
+      for (const role of ["heading", "body", "small", "caption"]) {
+        await expect(type.getByText(role, { exact: true })).toBeVisible();
+      }
 
       // spacing and radius
       const space = page.locator("section#space");
