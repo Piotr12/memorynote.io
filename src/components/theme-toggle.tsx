@@ -1,24 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import type { Theme } from "@/lib/theme";
 import { STORAGE_KEY } from "@/lib/theme";
 import { messages } from "@/i18n/messages";
 
-// The inline head script sets data-theme before first paint, so the
-// client initializer already reads the current mode. The server pass
-// has no document and renders the default label.
-function initialTheme(): Theme {
-  if (typeof document === "undefined") {
-    return "light";
-  }
+// The data-theme attribute on <html> is the single source of truth: the
+// inline head script sets it before first paint and the toggle updates it.
+// The component mirrors it through an external store instead of holding a
+// copy in state, so the label can never drift from the applied mode.
+
+function subscribe(onStoreChange: () => void) {
+  const observer = new MutationObserver(onStoreChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
+
+function readTheme(): Theme {
   return document.documentElement.getAttribute("data-theme") === "dark"
     ? "dark"
     : "light";
 }
 
+// The static export renders before the user's preference is known, so the
+// server pass and the hydration pass agree on the default. The client pass
+// re-renders with the attribute value the head script already applied.
+function serverTheme(): Theme {
+  return "light";
+}
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(initialTheme);
+  const theme = useSyncExternalStore(subscribe, readTheme, serverTheme);
 
   function toggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -29,7 +44,6 @@ export function ThemeToggle() {
       // Storage is unavailable (private mode); the choice applies to this
       // session only. The attribute is already set.
     }
-    setTheme(next);
   }
 
   const label = theme === "dark" ? messages.toggleToLight : messages.toggleToDark;
