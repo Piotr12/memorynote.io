@@ -102,10 +102,11 @@ test.describe("font", () => {
     });
     await page.goto("/design-preview");
     expect(external).toEqual([]);
-    const families = await page
-      .locator("body")
-      .evaluate(() => document.fonts.ready.then(() => "loaded"));
-    expect(families).toBe("loaded");
+    await page.evaluate(() => document.fonts.ready);
+    const interLoaded = await page.evaluate(() =>
+      document.fonts.check("16px Inter"),
+    );
+    expect(interLoaded, "the self-hosted Inter must be active").toBe(true);
   });
 });
 
