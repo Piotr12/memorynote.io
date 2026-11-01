@@ -36,8 +36,8 @@ jobs:
           sed -i 's|NEXT_PUBLIC_BUILD_BRANCH: ""|NEXT_PUBLIC_BUILD_BRANCH: "'"$GITHUB_REF_NAME"'"|' "$KAMAL_CONFIG"
           sed -i 's|NEXT_PUBLIC_BUILD_COMMIT: ""|NEXT_PUBLIC_BUILD_COMMIT: "'"$GITHUB_SHA"'"|' "$KAMAL_CONFIG"
           grep -A3 'args:' "$KAMAL_CONFIG"
-          [ -n "$(grep -F "NEXT_PUBLIC_BUILD_BRANCH: \"${GITHUB_REF_NAME}\"" "$KAMAL_CONFIG")" ] || exit 1
-          [ -n "$(grep -F "NEXT_PUBLIC_BUILD_COMMIT: \"${GITHUB_SHA}\"" "$KAMAL_CONFIG")" ] || exit 1
+          grep -Fq "NEXT_PUBLIC_BUILD_BRANCH: \"${GITHUB_REF_NAME}\"" "$KAMAL_CONFIG" || exit 1
+          grep -Fq "NEXT_PUBLIC_BUILD_COMMIT: \"${GITHUB_SHA}\"" "$KAMAL_CONFIG" || exit 1
 
       - name: Configure the deploy key
         run: |
