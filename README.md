@@ -35,7 +35,8 @@ port 4173.
 | Lint and typecheck | `npm run lint` |
 | Unit tests | `npm run test` |
 | Mutation tests | `npm run test:mutation` |
-| E2E tests and screenshots | `npm run e2e` |
+| E2E tests | `npm run e2e` |
+| Screenshots | `npm run screenshots` |
 | Page, image, and config tests | `bash test/page_test.sh && bash test/image_test.sh && bash test/config_test.sh` |
 
 `npm run e2e` builds the export first, stamped with the local branch
