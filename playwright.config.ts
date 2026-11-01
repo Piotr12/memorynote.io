@@ -14,7 +14,8 @@ export default defineConfig({
   webServer: {
     command: `node scripts/serve.mjs out ${port}`,
     url: `http://127.0.0.1:${port}/up`,
-    reuseExistingServer: !process.env.CI,
+    // A server already on the port makes the run fail, so a stale
+    // build can never be tested silently.
     timeout: 30_000,
   },
 });
