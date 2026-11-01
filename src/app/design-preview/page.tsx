@@ -294,7 +294,7 @@ export default function DesignPreviewPage() {
                     </a>{" "}
                     {messages.components.textBodyTail}
                   </Text>
-                  <Text role="caption" style={{ marginTop: 8 }}>
+                  <Text role="caption">
                     {messages.components.textCaption}
                   </Text>
                 </div>

@@ -558,6 +558,10 @@ table.bp {
   color: var(--text-2);
 }
 
+.stage .s-c {
+  margin-top: var(--space-2);
+}
+
 /* button */
 .btn {
   display: inline-block;
