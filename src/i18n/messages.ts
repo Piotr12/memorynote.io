@@ -35,6 +35,26 @@ export const messages = {
     dark: "dark",
     contrast: "contrast (AA)",
   },
+  tokenNotes: {
+    brand: "brand, large use only",
+    ratioOnBg: "{light} · {dark}",
+    textOnBg: "text on bg {light}",
+    surface: "cards, inputs",
+  },
+  specimenCaption: "Inter {meta} — display, the boldest role on the page",
+  displaySample: "A note, kept.",
+  typeScaleSamples: {
+    heading: "Spring plan, first draft",
+    body: "Write it down before it walks away.",
+    small: "Faster than Tuesday. The river route held up.",
+    caption: "edited 12 min ago",
+  },
+  typeRoles: {
+    heading: "heading",
+    body: "body",
+    small: "small",
+    caption: "caption",
+  },
   scale: {
     role: "role",
     sample: "sample",
@@ -46,6 +66,12 @@ export const messages = {
   breakpointTable: {
     px: "px",
     appliesTo: "applies to",
+  },
+  breakpointUse: {
+    sm: "small phones up",
+    md: "tablets up — sidebar layout appears",
+    lg: "laptops up",
+    xl: "desktop up, content max width",
   },
   components: {
     button: "Button",

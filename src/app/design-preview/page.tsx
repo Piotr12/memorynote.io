@@ -6,8 +6,11 @@ import { Text } from "@/components/text";
 import { messages } from "@/i18n/messages";
 import {
   breakpoints,
-  colorTokens,
+  colorNote,
+  colorToken,
+  contrastTable,
   displaySpecimen,
+  paletteChips,
   radiusCards,
   radiusControls,
   spacingSteps,
@@ -63,16 +66,19 @@ export default function DesignPreviewPage() {
             </h2>
             <p className="section-lede">{messages.lede.color}</p>
             <div className="chips">
-              {colorTokens.map((token) => (
-                <span className="chip" key={token.name}>
-                  <span
-                    className="sq"
-                    style={{ backgroundColor: token.light }}
-                  />
-                  <span className="n">{token.name}</span>
-                  <span className="h">{token.light}</span>
-                </span>
-              ))}
+              {paletteChips.map((name) => {
+                const token = colorToken(name);
+                return (
+                  <span className="chip" key={name}>
+                    <span
+                      className="sq"
+                      style={{ backgroundColor: token.light }}
+                    />
+                    <span className="n">{name}</span>
+                    <span className="h">{token.light}</span>
+                  </span>
+                );
+              })}
             </div>
             <table className="tokens">
               <thead>
@@ -84,26 +90,29 @@ export default function DesignPreviewPage() {
                 </tr>
               </thead>
               <tbody>
-                {colorTokens.map((token) => (
-                  <tr key={token.name}>
-                    <td>{token.name}</td>
-                    <td className="cell">
-                      <span
-                        className="dot"
-                        style={{ backgroundColor: token.light }}
-                      />
-                      {token.light}
-                    </td>
-                    <td className="cell">
-                      <span
-                        className="dot"
-                        style={{ backgroundColor: token.dark }}
-                      />
-                      {token.dark}
-                    </td>
-                    <td className="aa">{token.note}</td>
-                  </tr>
-                ))}
+                {contrastTable.map((name) => {
+                  const token = colorToken(name);
+                  return (
+                    <tr key={name}>
+                      <td>{name}</td>
+                      <td className="cell">
+                        <span
+                          className="dot"
+                          style={{ backgroundColor: token.light }}
+                        />
+                        {token.light}
+                      </td>
+                      <td className="cell">
+                        <span
+                          className="dot"
+                          style={{ backgroundColor: token.dark }}
+                        />
+                        {token.dark}
+                      </td>
+                      <td className="aa">{colorNote(token)}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </section>
@@ -116,11 +125,13 @@ export default function DesignPreviewPage() {
             <p className="section-lede">{messages.lede.type}</p>
             <div className="spec-strip">
               <div className={displaySpecimen.className}>
-                {displaySpecimen.sample}
+                {messages.displaySample}
               </div>
               <div className="cap">
-                Inter {displaySpecimen.meta} — display, the boldest role on the
-                page
+                {messages.specimenCaption.replace(
+                  "{meta}",
+                  displaySpecimen.meta,
+                )}
               </div>
             </div>
             <table className="scale">
@@ -133,8 +144,14 @@ export default function DesignPreviewPage() {
               <tbody>
                 {typeScale.map((role) => (
                   <tr key={role.role}>
-                    <td className="m">{role.meta}</td>
-                    <td className={role.className}>{role.sample}</td>
+                    <td className="m">
+                      <span>{role.meta}</span>
+                      <br />
+                      <span>{messages.typeRoles[role.role]}</span>
+                    </td>
+                    <td className={role.className}>
+                      {messages.typeScaleSamples[role.role]}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -204,7 +221,7 @@ export default function DesignPreviewPage() {
                 {breakpoints.map((bp) => (
                   <tr key={bp.px}>
                     <td className="px">{bp.px}</td>
-                    <td className="use-col">{bp.use}</td>
+                    <td className="use-col">{messages.breakpointUse[bp.id]}</td>
                   </tr>
                 ))}
               </tbody>

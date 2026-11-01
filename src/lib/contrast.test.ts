@@ -5,6 +5,7 @@ import {
   contrastRatio,
   relativeLuminance,
 } from "./contrast";
+import { colorToken } from "./tokens";
 
 describe("relativeLuminance", () => {
   it("is 1 for white and 0 for black", () => {
@@ -50,41 +51,52 @@ describe("contrastRatio", () => {
   });
 
   // The spec-named pairings from the signed spec's edge cases, both themes.
+  // The values come from the token table, so a drifted token fails here.
   // --orange is decorative in light mode by the spec's own decision; it is
   // checked there only as large text on dark, where it passes.
   it("keeps AA for text pairings in light mode", () => {
-    expect(contrastRatio("#c2410c", "#fcfcfb")).toBeGreaterThanOrEqual(
+    const accent = colorToken("--accent");
+    const bg = colorToken("--bg");
+    const onAccent = colorToken("--on-accent");
+    const text = colorToken("--text");
+    const text2 = colorToken("--text-2");
+    expect(contrastRatio(accent.light, bg.light)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#1c1917", "#fcfcfb")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(text.light, bg.light)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#57534e", "#fcfcfb")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(text2.light, bg.light)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#ffffff", "#c2410c")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(onAccent.light, accent.light)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
   });
 
   it("keeps AA for text pairings in dark mode", () => {
-    expect(contrastRatio("#fb923c", "#0c0a09")).toBeGreaterThanOrEqual(
+    const accent = colorToken("--accent");
+    const bg = colorToken("--bg");
+    const onAccent = colorToken("--on-accent");
+    const text = colorToken("--text");
+    const text2 = colorToken("--text-2");
+    expect(contrastRatio(accent.dark, bg.dark)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#fafafa", "#0c0a09")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(text.dark, bg.dark)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#a8a29e", "#0c0a09")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(text2.dark, bg.dark)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
-    expect(contrastRatio("#1c1917", "#fb923c")).toBeGreaterThanOrEqual(
+    expect(contrastRatio(onAccent.dark, accent.dark)).toBeGreaterThanOrEqual(
       AA_NORMAL,
     );
   });
 
   it("keeps the large-text minimum for the decorative orange on dark", () => {
-    expect(contrastRatio("#f97316", "#0c0a09")).toBeGreaterThanOrEqual(
-      AA_LARGE,
-    );
+    expect(
+      contrastRatio(colorToken("--orange").dark, colorToken("--bg").dark),
+    ).toBeGreaterThanOrEqual(AA_LARGE);
   });
 });
