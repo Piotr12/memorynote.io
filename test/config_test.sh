@@ -2,6 +2,9 @@
 # The dev and prod kamal configs must target different apps, images and
 # domains, so a dev deploy can never replace the prod app.
 # Both configs must enable proxy TLS, so the domains serve HTTPS.
+# Both configs must carry empty build-arg defaults: the deploy workflow
+# stamps the real branch and commit into the file before it deploys, and
+# a checked-in value would leak into every manual build.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -13,12 +16,17 @@ import sys, yaml
 dev = yaml.safe_load(open("kamal-dev.yml"))
 prod = yaml.safe_load(open("kamal-prod.yml"))
 
+def args(config):
+    return config["builder"]["args"]
+
 checks = {
     "different services": dev["service"] != prod["service"],
     "different images": dev["image"] != prod["image"],
     "different proxy hosts": set(dev["proxy"]["hosts"]) != set(prod["proxy"]["hosts"]),
-    "dev environment arg": dev["builder"]["args"]["ENVIRONMENT"] == "dev",
-    "prod environment arg": prod["builder"]["args"]["ENVIRONMENT"] == "prod",
+    "dev branch arg is empty": args(dev)["NEXT_PUBLIC_BUILD_BRANCH"] == "",
+    "prod branch arg is empty": args(prod)["NEXT_PUBLIC_BUILD_BRANCH"] == "",
+    "dev commit arg is empty": args(dev)["NEXT_PUBLIC_BUILD_COMMIT"] == "",
+    "prod commit arg is empty": args(prod)["NEXT_PUBLIC_BUILD_COMMIT"] == "",
     "same registry": dev["registry"]["server"] == prod["registry"]["server"],
     "same servers": dev["servers"] == prod["servers"],
     "dev proxy ssl": dev["proxy"].get("ssl") is True,

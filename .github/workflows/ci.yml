@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  infra:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,11 +35,67 @@ jobs:
           curl -fsSL "$url" | tar xz
           ./gitleaks detect --source . --redact --exit-code 1 -v
 
+      - name: Test the configs
+        run: bash test/config_test.sh
+
       - name: Test the page
         run: bash test/page_test.sh
 
       - name: Test the image
         run: bash test/image_test.sh
 
-      - name: Test the configs
-        run: bash test/config_test.sh
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint and typecheck
+        run: npm run lint
+
+      - name: Run the unit tests
+        run: npm run test
+
+      - name: Run the mutation tests
+        run: npm run test:mutation
+
+      # The e2e build stamps the build identity the same way the deploy
+      # pipeline does, so the footer test runs against real values.
+      - name: Build for e2e
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BUILD_BRANCH: ci
+          NEXT_PUBLIC_BUILD_COMMIT: ${{ github.sha }}
+
+      - name: Install the browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run the e2e tests
+        run: npx playwright test
+        env:
+          NEXT_PUBLIC_BUILD_BRANCH: ci
+          NEXT_PUBLIC_BUILD_COMMIT: ${{ github.sha }}
+
+      - name: Capture the evidence screenshots
+        run: |
+          node scripts/serve.mjs out 4173 &
+          server=$!
+          for _ in $(seq 1 20); do
+            curl -fsS http://127.0.0.1:4173/up >/dev/null 2>&1 && break
+            sleep 0.5
+          done
+          node scripts/screenshots.mjs test/evidence
+          kill $server
+
+      - name: Upload the evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-evidence
+          path: test/evidence

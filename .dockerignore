@@ -6,3 +6,5 @@ docs
 test
 scripts
 *.md
+node_modules
+out
