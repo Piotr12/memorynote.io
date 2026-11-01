@@ -49,7 +49,7 @@ export default function DesignPreviewPage() {
           <nav className="nav" aria-label="Sections">
             {sectionIds.map((id) => (
               <a key={id} href={`#${id}`}>
-                {messages.nav[id === "type" ? "type" : id]}
+                {messages.nav[id]}
               </a>
             ))}
           </nav>
