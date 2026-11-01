@@ -21,18 +21,20 @@ with `output: "export"`. `nginx:1.27-alpine` serves the export from
 `out/` on port 80. The build reads `NEXT_PUBLIC_BUILD_BRANCH` and
 `NEXT_PUBLIC_BUILD_COMMIT` and inlines them into the footer.
 
-Kamal reads build args from the config file only. The checked-in kamal
-configs carry empty defaults. The deploy workflow stamps the branch and
-commit of the pushed ref into the config. The footer of the deployed
-site then shows both. A manual deploy without stamping serves the empty
-defaults, and the footer shows its first line only.
+Kamal reads build args from the config file only. The deploy workflow
+stamps the branch and commit of the pushed ref into the config. The stamp
+step fails if a stamped value is missing, so a stamping bug can never ship
+an empty footer. The checked-in kamal configs carry empty defaults. A
+manual deploy without stamping serves the empty defaults, and the footer
+shows its first line only.
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
   A[push to dev or main] --> B[GitHub Actions]
-  B --> C[build image with buildx]
+  B --> S[stamp build identity into the config]
+  S --> C[build image with buildx]
   C --> D[push to the kamal registry on the runner]
   D --> E[kamal deploy over SSH]
   E --> F[kamal-proxy routes the domains]
