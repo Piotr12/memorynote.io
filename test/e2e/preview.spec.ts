@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { themeInitScript } from "../../src/lib/theme-script";
 
 // Viewport matrix, one set for content assertions and screenshots:
 // mobile, the 640 px edge, tablet (sidebar appears), desktop.
@@ -48,11 +49,15 @@ test.describe("theme", () => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   });
 
-  test("shows no flash of the wrong mode", async ({ page }) => {
-    await page.emulateMedia({ colorScheme: "dark" });
-    // The attribute must be set before the first navigation event completes.
-    await page.goto("/design-preview", { waitUntil: "commit" });
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  test("sets the theme before first paint, in the served bytes", async ({
+    request,
+  }) => {
+    // The guarantee lives in the served bytes: the inline script must sit
+    // in <head>, where it runs before first paint. A DOM assertion
+    // auto-retries and would pass even for a post-paint script.
+    const html = await (await request.get("/design-preview")).text();
+    const head = html.slice(html.indexOf("<head>"), html.indexOf("</head>"));
+    expect(head, "the theme script sits in <head>").toContain(themeInitScript);
   });
 
   test("toggles by keyboard with a visible focus state", async ({
