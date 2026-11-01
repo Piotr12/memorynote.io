@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Theme } from "@/lib/theme";
 import { STORAGE_KEY } from "@/lib/theme";
 import { messages } from "@/i18n/messages";
 
-function readCurrentTheme(): Theme {
+// The inline head script sets data-theme before first paint, so the
+// client initializer already reads the current mode. The server pass
+// has no document and renders the default label.
+function initialTheme(): Theme {
+  if (typeof document === "undefined") {
+    return "light";
+  }
   return document.documentElement.getAttribute("data-theme") === "dark"
     ? "dark"
     : "light";
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
-    // The inline head script already set the attribute before first
-    // paint; this only syncs the label.
-    setTheme(readCurrentTheme());
-  }, []);
+  const [theme, setTheme] = useState<Theme>(initialTheme);
 
   function toggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
