@@ -77,9 +77,6 @@ describe("single token source", () => {
     expect(light["--bp-md"]).toBe("768px");
     expect(light["--bp-lg"]).toBe("1024px");
     expect(light["--bp-xl"]).toBe("1280px");
-    for (const bp of breakpoints) {
-      expect(breakpoints.map((b) => b.px)).toContain(bp.px);
-    }
   });
 
   it("uses only min-width media queries, with token values", () => {
