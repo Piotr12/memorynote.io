@@ -65,6 +65,18 @@ describe("single token source", () => {
     }
   });
 
+  it("consumes every spacing token in the layout rules", () => {
+    const used = new Set(
+      [...css.matchAll(/var\((--space-\d+)\)/g)].map((m) => m[1]),
+    );
+    for (const step of spacingSteps) {
+      const token = `--space-${step / 4}`;
+      expect(used.has(token), `${token} is consumed by a layout rule`).toBe(
+        true,
+      );
+    }
+  });
+
   it("declares both radii as tokens", () => {
     const light = lightTokens();
     expect(light["--radius-control"]).toBe(`${radiusControls}px`);

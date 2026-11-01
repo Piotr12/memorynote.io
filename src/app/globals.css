@@ -91,12 +91,12 @@ body {
 .wrap {
   max-width: 1160px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--space-6);
 }
 
 @media (min-width: 640px) {
   .wrap {
-    padding: 0 32px;
+    padding: 0 var(--space-8);
   }
 }
 
@@ -128,7 +128,7 @@ header {
   letter-spacing: -0.01em;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .mark {
@@ -148,18 +148,18 @@ header {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  padding-top: 24px;
+  padding-top: var(--space-6);
 }
 
 @media (min-width: 768px) {
   .layout {
     grid-template-columns: 200px 1fr;
-    gap: 48px;
+    gap: var(--space-12);
   }
 }
 
 aside {
-  padding-bottom: 32px;
+  padding-bottom: var(--space-8);
 }
 
 @media (min-width: 768px) {
@@ -176,7 +176,7 @@ aside {
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--radius-control);
-  padding: 8px 12px;
+  padding: var(--space-2) var(--space-3);
   display: inline-block;
   margin-bottom: 20px;
   cursor: pointer;
@@ -195,7 +195,7 @@ aside {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .nav a {
@@ -242,7 +242,7 @@ section {
 
 section:first-child {
   border-top: none;
-  padding-top: 8px;
+  padding-top: var(--space-2);
 }
 
 section h2 {
@@ -250,7 +250,7 @@ section h2 {
   font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -264,21 +264,21 @@ section h2 .idx {
 .section-lede {
   font-size: 13px;
   color: var(--text-2);
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 /* color */
 .chips {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .chip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: var(--radius-control);
@@ -317,7 +317,7 @@ table.tokens {
 }
 
 .tokens td {
-  padding: 8px 10px;
+  padding: var(--space-2) 10px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -328,7 +328,7 @@ table.tokens {
 .tokens .cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   font: 400 12px/1.4 var(--mono);
   white-space: nowrap;
 }
@@ -351,8 +351,8 @@ table.tokens {
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: var(--radius-card);
-  padding: 20px 20px 8px;
-  margin-bottom: 16px;
+  padding: 20px 20px var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .spec-strip .big {
@@ -365,7 +365,7 @@ table.tokens {
 .spec-strip .cap {
   font: 400 12px/1.5 var(--mono);
   color: var(--text-2);
-  padding: 8px 0;
+  padding: var(--space-2) 0;
 }
 
 table.scale {
@@ -428,13 +428,13 @@ table.scale {
 .duo {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
 @media (min-width: 768px) {
   .duo {
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: var(--space-8);
   }
 }
 
@@ -448,7 +448,7 @@ table.scale {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 4px 0;
+  padding: var(--space-1) 0;
 }
 
 .space-bar {
@@ -466,7 +466,7 @@ table.scale {
 
 .radius-row {
   display: flex;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .radius-item {
@@ -474,13 +474,13 @@ table.scale {
 }
 
 .radius-box {
-  height: 64px;
+  height: var(--space-16);
   background: var(--surface);
   border: 1.5px solid var(--text-2);
 }
 
 .radius-item .meta {
-  margin-top: 8px;
+  margin-top: var(--space-2);
 }
 
 /* breakpoints */
@@ -500,7 +500,7 @@ table.bp {
 }
 
 .bp td {
-  padding: 8px 10px;
+  padding: var(--space-2) 10px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -542,14 +542,14 @@ table.bp {
 @media (min-width: 768px) {
   .stage-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: var(--space-8);
   }
 }
 
 .stage h3 {
   font-size: 13px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -569,7 +569,7 @@ table.bp {
   display: inline-block;
   font: 500 14px/1 var(--font);
   border-radius: var(--radius-control);
-  padding: 10px 16px;
+  padding: 10px var(--space-4);
   border: 1px solid transparent;
   cursor: pointer;
 }
@@ -607,7 +607,7 @@ table.bp {
 
 .gap {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
@@ -616,7 +616,7 @@ table.bp {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  padding: 16px;
+  padding: var(--space-4);
 }
 
 .card h4 {
@@ -640,7 +640,7 @@ table.bp {
   justify-content: space-between;
   align-items: center;
   margin-top: 14px;
-  padding-top: 12px;
+  padding-top: var(--space-3);
   border-top: 1px solid var(--border);
 }
 
@@ -672,7 +672,7 @@ table.bp {
   background: var(--surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-control);
-  padding: 10px 12px;
+  padding: 10px var(--space-3);
 }
 
 .field input::placeholder {
@@ -694,8 +694,8 @@ table.bp {
 /* footer */
 footer {
   border-top: 1px solid var(--border);
-  margin-top: 48px;
-  padding: 24px 0 48px;
+  margin-top: var(--space-12);
+  padding: var(--space-6) 0 var(--space-12);
   color: var(--text-2);
 }
 
