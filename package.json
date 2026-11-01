@@ -8,7 +8,7 @@
     "start": "node scripts/serve.mjs out 4173",
     "lint": "eslint . && tsc --noEmit",
     "test": "vitest run",
-    "e2e": "playwright test",
+    "e2e": "NEXT_PUBLIC_BUILD_BRANCH=local NEXT_PUBLIC_BUILD_COMMIT=$(git rev-parse --short HEAD) sh -c 'next build && playwright test'",
     "screenshots": "node scripts/screenshots.mjs",
     "test:mutation": "stryker run"
   },

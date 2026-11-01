@@ -38,11 +38,9 @@ port 4173.
 | E2E tests and screenshots | `npm run e2e` |
 | Page, image, and config tests | `bash test/page_test.sh && bash test/image_test.sh && bash test/config_test.sh` |
 
-The e2e build stamps the build identity the deploy pipeline does:
-
-```bash
-NEXT_PUBLIC_BUILD_BRANCH=local NEXT_PUBLIC_BUILD_COMMIT=$(git rev-parse --short HEAD) npm run build
-```
+`npm run e2e` builds the export first, stamped with the local branch
+and commit, then serves it and runs the tests. The footer test reads
+the same identity from the environment.
 
 Without build-time values the footer omits its second line.
 

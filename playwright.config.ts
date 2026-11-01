@@ -1,7 +1,8 @@
 import { defineConfig } from "@playwright/test";
 
-// The e2e run builds the static export with footer values set, then serves
-// out/ with scripts/serve.mjs. See the e2e script in package.json.
+// npm run e2e builds the static export with the local build identity,
+// then this config serves out/ with scripts/serve.mjs. The footer test
+// reads the same identity from the environment.
 const port = 4173;
 
 export default defineConfig({
