@@ -1,6 +1,6 @@
 # pj SDLC skills
 
-The skills in this folder come from [Piotr12/pj-sdlc-skills](https://github.com/Piotr12/pj-sdlc-skills) (MIT license), vendored from commit `189a062438a44334a941f0a37b5a070100e2ee1a` (v0.2.0).
+The skills in this folder come from [Piotr12/pj-sdlc-skills](https://github.com/Piotr12/pj-sdlc-skills) (MIT license), vendored from commit `4dd733f973b5e19fc5bc9c2ce8f210caee9eac2c` (v0.3.0).
 
 They are installed together as one set. All of them follow one protocol: `pj-prep-the-repo/reference/protocol.md`.
 
@@ -16,5 +16,6 @@ They are installed together as one set. All of them follow one protocol: `pj-pre
 | `pj-decompose` | Splits an issue that is too big into child issues. |
 | `pj-repro` | Reproduces a bug with a failing test before the fix. |
 | `pj-healthcheck` | Checks the repo setup, `attachments`, and `docs/`. Changes nothing. |
+| `pj-handhold` | Takes one issue through the whole flow with no human. A new agent session runs each step. A human merges. |
 
 To update them, re-copy the `skills/pj-*` folders from the upstream repo into this directory. Keep the set complete; the skills reference each other.
