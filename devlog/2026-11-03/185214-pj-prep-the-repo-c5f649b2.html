@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>18:52 pj-prep-the-repo</title>
+<article>
+  <h2>18:52 Europe/Warsaw · pj-prep-the-repo memorynote.io · done</h2>
+  <ul>
+    <li>Re-ran the prep with pj-sdlc-skills v0.3.0 (commit 4dd733f). Opened PR 14: re-vendored .agents/skills, refreshed .pj/scripts, updated the AGENTS.md Autonomy rule. <a href="https://github.com/Piotr12/memorynote.io/pull/14">https://github.com/Piotr12/memorynote.io/pull/14</a></li>
+    <li>New skill pj-handhold runs one issue through the whole flow unattended. Its driver handhold.sh and guard hook pj-guard.sh now ship in .pj/scripts.</li>
+    <li>Rulesets pj-main and pj-attachments still missing: the token gets HTTP 403 on the Rules API. Create them in Settings, Branches, Rulesets, or run prep.sh rulesets --apply with a token that has the rules permission.</li>
+    <li>Healthcheck: labels, attachments, config, CLAUDE.md, .gitignore ok. Stale worktrees .worktrees/3 and .worktrees/4 (merged PRs) can be removed. Unpicked mockup v1 of closed issue 4 is a deletion candidate.</li>
+  </ul>
+</article>
